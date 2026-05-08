@@ -1,0 +1,24 @@
+{
+  "main_menu.play": "Jouer",
+  "main_menu.shop": "Boutique",
+  "main_menu.settings": "Paramètres",
+  "main_menu.quit": "Quitter",
+
+  "shop.title": "Boutique",
+  "shop.tab.diamonds": "Diamants",
+  "shop.tab.upgrades": "Améliorations",
+  "shop.tab.rewarded_ad": "Récompense",
+
+  "shop.diamonds.placeholder": "Achats de diamants à venir.",
+  "shop.upgrades.placeholder": "Améliorations permanentes à venir.",
+  "shop.rewarded_ad.description": "Regarder une pub pour gagner de l’or.",
+  "shop.rewarded_ad.button": "Regarder une pub",
+  "shop.rewarded_ad.reward": "Récompense actuelle : {amount} or",
+
+  "common.back": "Retour",
+  "settings.title": "Paramètres",
+  "settings.placeholder": "Les paramètres seront disponibles prochainement.",
+
+  "game_bootstrap.title": "Jeu",
+  "game_bootstrap.placeholder": "Le gameplay sera ajouté prochainement."
+}

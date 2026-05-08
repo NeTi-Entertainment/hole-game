@@ -1,0 +1,69 @@
+[gd_scene load_steps=6 format=3 uid="uid://ba8fpop8mn4cp"]
+
+[ext_resource type="Script" uid="uid://c1ke2qe1siiob" path="res://scripts/game/screen/game_screen.gd" id="1_h5hde"]
+[ext_resource type="Material" uid="uid://jsnjbe7vtpe5" path="res://assets/materials/ground_material.tres" id="1_rs55t"]
+[ext_resource type="PackedScene" uid="uid://cq65os5tpt842" path="res://scenes/game/hole/hole_player.tscn" id="3_u3wq2"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_h5hde"]
+size = Vector2(20, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u3wq2"]
+size = Vector3(20, 0.2, 20)
+
+[node name="GameScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h5hde")
+
+[node name="GameViewportContainer" type="SubViewportContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="GameViewport" type="SubViewport" parent="GameViewportContainer"]
+unique_name_in_owner = true
+handle_input_locally = false
+size = Vector2i(1152, 648)
+size_2d_override = Vector2i(1280, 720)
+render_target_update_mode = 4
+
+[node name="GameWorld" type="Node3D" parent="GameViewportContainer/GameViewport"]
+unique_name_in_owner = true
+
+[node name="GameCamera" type="Camera3D" parent="GameViewportContainer/GameViewport/GameWorld"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.573576, 0.819152, 0, -0.819152, 0.573576, 0, 12, 8)
+current = true
+fov = 45.0
+
+[node name="SunLight" type="DirectionalLight3D" parent="GameViewportContainer/GameViewport/GameWorld"]
+unique_name_in_owner = true
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 0, 0)
+
+[node name="Ground" type="StaticBody3D" parent="GameViewportContainer/GameViewport/GameWorld"]
+
+[node name="GroundMesh" type="MeshInstance3D" parent="GameViewportContainer/GameViewport/GameWorld/Ground"]
+mesh = SubResource("PlaneMesh_h5hde")
+surface_material_override/0 = ExtResource("1_rs55t")
+
+[node name="GroundCollision" type="CollisionShape3D" parent="GameViewportContainer/GameViewport/GameWorld/Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+shape = SubResource("BoxShape3D_u3wq2")
+
+[node name="HolePlayer" parent="GameViewportContainer/GameViewport/GameWorld" instance=ExtResource("3_u3wq2")]
+
+[node name="BackButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 48)
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0

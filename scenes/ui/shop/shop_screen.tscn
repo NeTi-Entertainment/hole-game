@@ -1,0 +1,90 @@
+[gd_scene load_steps=2 format=3 uid="uid://45gqaa1vs766"]
+
+[ext_resource type="Script" uid="uid://b2b7mwfodqn7j" path="res://scripts/ui/shop/shop_screen.gd" id="1_njuoq"]
+
+[node name="ShopScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_njuoq")
+
+[node name="SafeAreaMargin" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="MainColumn" type="VBoxContainer" parent="SafeAreaMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="SafeAreaMargin/MainColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="ShopTabs" type="TabContainer" parent="SafeAreaMargin/MainColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+current_tab = 0
+
+[node name="DiamondsTab" type="VBoxContainer" parent="SafeAreaMargin/MainColumn/ShopTabs"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+metadata/_tab_index = 0
+
+[node name="DiamondsPlaceholderLabel" type="Label" parent="SafeAreaMargin/MainColumn/ShopTabs/DiamondsTab"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="UpgradesTab" type="VBoxContainer" parent="SafeAreaMargin/MainColumn/ShopTabs"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+metadata/_tab_index = 1
+
+[node name="UpgradesPlaceholderLabel" type="Label" parent="SafeAreaMargin/MainColumn/ShopTabs/UpgradesTab"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RewardedAdTab" type="VBoxContainer" parent="SafeAreaMargin/MainColumn/ShopTabs"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+metadata/_tab_index = 2
+
+[node name="RewardedAdDescriptionLabel" type="Label" parent="SafeAreaMargin/MainColumn/ShopTabs/RewardedAdTab"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RewardedAdGoldLabel" type="Label" parent="SafeAreaMargin/MainColumn/ShopTabs/RewardedAdTab"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RewardedAdRewardLabel" type="Label" parent="SafeAreaMargin/MainColumn/ShopTabs/RewardedAdTab"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RewardedAdButton" type="Button" parent="SafeAreaMargin/MainColumn/ShopTabs/RewardedAdTab"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 56)
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="SafeAreaMargin/MainColumn"]
+unique_name_in_owner = true
+layout_mode = 2
