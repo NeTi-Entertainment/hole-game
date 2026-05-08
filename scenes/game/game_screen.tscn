@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://ba8fpop8mn4cp"]
+[gd_scene load_steps=7 format=3 uid="uid://ba8fpop8mn4cp"]
 
 [ext_resource type="Script" uid="uid://c1ke2qe1siiob" path="res://scripts/game/screen/game_screen.gd" id="1_h5hde"]
 [ext_resource type="Material" uid="uid://jsnjbe7vtpe5" path="res://assets/materials/ground_material.tres" id="1_rs55t"]
+[ext_resource type="Script" uid="uid://dtbdrrjofpdkl" path="res://scripts/game/camera/follow_camera.gd" id="2_xbn6y"]
 [ext_resource type="PackedScene" uid="uid://cq65os5tpt842" path="res://scenes/game/hole/hole_player.tscn" id="3_u3wq2"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_h5hde"]
@@ -44,6 +45,8 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 0.573576, 0.819152, 0, -0.819152, 0.573576, 0, 12, 8)
 current = true
 fov = 45.0
+script = ExtResource("2_xbn6y")
+target_path = NodePath("../HolePlayer")
 
 [node name="SunLight" type="DirectionalLight3D" parent="GameViewportContainer/GameViewport/GameWorld"]
 unique_name_in_owner = true
