@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://ba8fpop8mn4cp"]
+[gd_scene load_steps=8 format=3 uid="uid://ba8fpop8mn4cp"]
 
 [ext_resource type="Script" uid="uid://c1ke2qe1siiob" path="res://scripts/game/screen/game_screen.gd" id="1_h5hde"]
 [ext_resource type="Material" uid="uid://jsnjbe7vtpe5" path="res://assets/materials/ground_material.tres" id="1_rs55t"]
 [ext_resource type="Script" uid="uid://dtbdrrjofpdkl" path="res://scripts/game/camera/follow_camera.gd" id="2_xbn6y"]
 [ext_resource type="PackedScene" uid="uid://cq65os5tpt842" path="res://scenes/game/hole/hole_player.tscn" id="3_u3wq2"]
+[ext_resource type="Script" uid="uid://7rj3xkrkc6d" path="res://scripts/game/bounds/play_area_bounds.gd" id="5_874p4"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_h5hde"]
 size = Vector2(20, 20)
@@ -63,6 +64,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 shape = SubResource("BoxShape3D_u3wq2")
 
 [node name="HolePlayer" parent="GameViewportContainer/GameViewport/GameWorld" instance=ExtResource("3_u3wq2")]
+play_area_bounds_path = NodePath("../PlayAreaBounds")
+
+[node name="PlayAreaBounds" type="Node3D" parent="GameViewportContainer/GameViewport/GameWorld"]
+unique_name_in_owner = true
+script = ExtResource("5_874p4")
 
 [node name="BackButton" type="Button" parent="."]
 unique_name_in_owner = true

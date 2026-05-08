@@ -1,13 +1,31 @@
 extends CharacterBody3D
 
 @export var move_speed: float = 6.0
+@export var hole_radius: float = 1.0
+@export var play_area_bounds_path: NodePath
 
 var _input_direction: Vector3 = Vector3.ZERO
+var _play_area_bounds: PlayAreaBounds = null
 
 
-func _physics_process(delta: float) -> void:
+func _ready() -> void:
+	_resolve_play_area_bounds()
+
+
+func _physics_process(_delta: float) -> void:
 	_update_input_direction()
 	_apply_movement()
+	_apply_bounds()
+
+
+func _resolve_play_area_bounds() -> void:
+	if play_area_bounds_path.is_empty():
+		return
+
+	var found_node := get_node_or_null(play_area_bounds_path)
+
+	if found_node is PlayAreaBounds:
+		_play_area_bounds = found_node
 
 
 func _update_input_direction() -> void:
@@ -34,3 +52,16 @@ func _apply_movement() -> void:
 	velocity.y = 0.0
 
 	move_and_slide()
+
+
+func _apply_bounds() -> void:
+	if _play_area_bounds == null:
+		_resolve_play_area_bounds()
+
+	if _play_area_bounds == null:
+		return
+
+	global_position = _play_area_bounds.clamp_world_position(
+		global_position,
+		hole_radius
+	)
