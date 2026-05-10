@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://dnka807vekp0w"]
+
+[ext_resource type="Script" uid="uid://dsq23jsg3c2wg" path="res://scripts/game/consumables/consumable.gd" id="1_p6hhc"]
+[ext_resource type="Material" uid="uid://dh6vv8tr1v72q" path="res://assets/materials/consumables/basic_consumable_material.tres" id="2_thn2d"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_25xvs"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p6hhc"]
+
+[node name="BasicConsumable" type="StaticBody3D" groups=["consumable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+script = ExtResource("1_p6hhc")
+
+[node name="ConsumableMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_25xvs")
+surface_material_override/0 = ExtResource("2_thn2d")
+
+[node name="ConsumableCollision" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_p6hhc")

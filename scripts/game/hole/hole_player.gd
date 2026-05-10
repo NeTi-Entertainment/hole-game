@@ -4,12 +4,17 @@ extends CharacterBody3D
 @export var hole_radius: float = 1.0
 @export var play_area_bounds_path: NodePath
 
+@onready var hole_consumer: HoleConsumer = %HoleConsumer
+
 var _input_direction: Vector3 = Vector3.ZERO
 var _play_area_bounds: PlayAreaBounds = null
+var _score: int = 0
 
 
 func _ready() -> void:
 	_resolve_play_area_bounds()
+	_sync_consumer_radius()
+	_connect_consumer()
 
 
 func _physics_process(_delta: float) -> void:
@@ -26,6 +31,23 @@ func _resolve_play_area_bounds() -> void:
 
 	if found_node is PlayAreaBounds:
 		_play_area_bounds = found_node
+
+
+func _sync_consumer_radius() -> void:
+	if hole_consumer == null:
+		return
+
+	hole_consumer.set_hole_radius(hole_radius)
+
+
+func _connect_consumer() -> void:
+	if hole_consumer == null:
+		return
+
+	if hole_consumer.consumable_consumed.is_connected(_on_consumable_consumed):
+		return
+
+	hole_consumer.consumable_consumed.connect(_on_consumable_consumed)
 
 
 func _update_input_direction() -> void:
@@ -65,3 +87,8 @@ func _apply_bounds() -> void:
 		global_position,
 		hole_radius
 	)
+
+
+func _on_consumable_consumed(score_value: int) -> void:
+	_score += score_value
+	print("Objet mangé. Score : ", _score)
