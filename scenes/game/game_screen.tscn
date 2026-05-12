@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ba8fpop8mn4cp"]
+[gd_scene load_steps=11 format=3 uid="uid://ba8fpop8mn4cp"]
 
 [ext_resource type="Script" uid="uid://c1ke2qe1siiob" path="res://scripts/game/screen/game_screen.gd" id="1_h5hde"]
 [ext_resource type="Material" uid="uid://jsnjbe7vtpe5" path="res://assets/materials/ground_material.tres" id="1_rs55t"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://7rj3xkrkc6d" path="res://scripts/game/bounds/play_area_bounds.gd" id="5_874p4"]
 [ext_resource type="Script" uid="uid://gjopnmkurw4u" path="res://scripts/game/consumables/consumable_spawner.gd" id="6_6qx3b"]
 [ext_resource type="PackedScene" uid="uid://dnka807vekp0w" path="res://scenes/game/consumables/basic_consumable.tscn" id="6_xuyhh"]
+[ext_resource type="Script" uid="uid://bvfnea5voudva" path="res://scripts/game/hud/game_hud.gd" id="8_fxpxx"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_h5hde"]
 size = Vector2(20, 20)
@@ -67,6 +68,7 @@ shape = SubResource("BoxShape3D_u3wq2")
 
 [node name="HolePlayer" parent="GameViewportContainer/GameViewport/GameWorld" instance=ExtResource("3_u3wq2")]
 play_area_bounds_path = NodePath("../PlayAreaBounds")
+game_score_path = NodePath("../GameScore")
 
 [node name="PlayAreaBounds" type="Node3D" parent="GameViewportContainer/GameViewport/GameWorld"]
 unique_name_in_owner = true
@@ -82,9 +84,30 @@ consumable_scene = ExtResource("6_xuyhh")
 spawn_root_path = NodePath("../ConsumableSpawnRoot")
 play_area_bounds_path = NodePath("../PlayAreaBounds")
 
+[node name="GameScore" type="Node" parent="GameViewportContainer/GameViewport/GameWorld"]
+unique_name_in_owner = true
+
 [node name="BackButton" type="Button" parent="."]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(160, 48)
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
+
+[node name="GameHUD" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("8_fxpxx")
+game_score_path = NodePath("../GameViewportContainer/GameViewport/GameWorld/GameScore")
+
+[node name="ScoreLabel" type="Label" parent="GameHUD"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0

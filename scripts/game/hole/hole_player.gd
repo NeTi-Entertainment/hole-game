@@ -3,16 +3,18 @@ extends CharacterBody3D
 @export var move_speed: float = 6.0
 @export var hole_radius: float = 1.0
 @export var play_area_bounds_path: NodePath
+@export var game_score_path: NodePath
 
 @onready var hole_consumer: HoleConsumer = %HoleConsumer
 
 var _input_direction: Vector3 = Vector3.ZERO
 var _play_area_bounds: PlayAreaBounds = null
-var _score: int = 0
+var _game_score: GameScore = null
 
 
 func _ready() -> void:
 	_resolve_play_area_bounds()
+	_resolve_game_score()
 	_sync_consumer_radius()
 	_connect_consumer()
 
@@ -31,6 +33,16 @@ func _resolve_play_area_bounds() -> void:
 
 	if found_node is PlayAreaBounds:
 		_play_area_bounds = found_node
+
+
+func _resolve_game_score() -> void:
+	if game_score_path.is_empty():
+		return
+
+	var found_node := get_node_or_null(game_score_path)
+
+	if found_node is GameScore:
+		_game_score = found_node
 
 
 func _sync_consumer_radius() -> void:
@@ -90,5 +102,11 @@ func _apply_bounds() -> void:
 
 
 func _on_consumable_consumed(score_value: int) -> void:
-	_score += score_value
-	print("Objet mangé. Score : ", _score)
+	if _game_score == null:
+		_resolve_game_score()
+
+	if _game_score == null:
+		push_warning("HolePlayer : aucun GameScore assigné.")
+		return
+
+	_game_score.add_score(score_value)

@@ -20,5 +20,7 @@
   "settings.placeholder": "Les paramètres seront disponibles prochainement.",
 
   "game_bootstrap.title": "Jeu",
-  "game_bootstrap.placeholder": "Le gameplay sera ajouté prochainement."
+  "game_bootstrap.placeholder": "Le gameplay sera ajouté prochainement.",
+
+  "game.score": "Score : {amount}",
 }
