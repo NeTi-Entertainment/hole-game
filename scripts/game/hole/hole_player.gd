@@ -1,11 +1,11 @@
 extends CharacterBody3D
 
 @export var move_speed: float = 6.0
-@export var hole_radius: float = 1.0
 @export var play_area_bounds_path: NodePath
 @export var game_score_path: NodePath
 
 @onready var hole_consumer: HoleConsumer = %HoleConsumer
+@onready var hole_growth: HoleGrowth = %HoleGrowth
 
 var _input_direction: Vector3 = Vector3.ZERO
 var _play_area_bounds: PlayAreaBounds = null
@@ -15,7 +15,6 @@ var _game_score: GameScore = null
 func _ready() -> void:
 	_resolve_play_area_bounds()
 	_resolve_game_score()
-	_sync_consumer_radius()
 	_connect_consumer()
 
 
@@ -43,13 +42,6 @@ func _resolve_game_score() -> void:
 
 	if found_node is GameScore:
 		_game_score = found_node
-
-
-func _sync_consumer_radius() -> void:
-	if hole_consumer == null:
-		return
-
-	hole_consumer.set_hole_radius(hole_radius)
 
 
 func _connect_consumer() -> void:
@@ -97,16 +89,25 @@ func _apply_bounds() -> void:
 
 	global_position = _play_area_bounds.clamp_world_position(
 		global_position,
-		hole_radius
+		_get_current_hole_radius()
 	)
+
+
+func _get_current_hole_radius() -> float:
+	if hole_growth == null:
+		return 1.0
+
+	return hole_growth.get_current_radius()
 
 
 func _on_consumable_consumed(score_value: int) -> void:
 	if _game_score == null:
 		_resolve_game_score()
 
-	if _game_score == null:
+	if _game_score != null:
+		_game_score.add_score(score_value)
+	else:
 		push_warning("HolePlayer : aucun GameScore assigné.")
-		return
 
-	_game_score.add_score(score_value)
+	if hole_growth != null:
+		hole_growth.add_experience(score_value)

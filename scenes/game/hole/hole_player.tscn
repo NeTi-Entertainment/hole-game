@@ -1,9 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://cq65os5tpt842"]
+[gd_scene load_steps=13 format=3 uid="uid://cq65os5tpt842"]
 
 [ext_resource type="Script" uid="uid://ddl42rxhcu0pp" path="res://scripts/game/hole/hole_player.gd" id="1_0820l"]
 [ext_resource type="Material" uid="uid://bgr7tb2gc4htg" path="res://assets/materials/hole/hole_disc_material.tres" id="1_gppy7"]
 [ext_resource type="Material" uid="uid://c34248b04evem" path="res://assets/materials/hole/hole_rim_material.tres" id="3_baal1"]
 [ext_resource type="Script" uid="uid://drh3wgjuip4nc" path="res://scripts/game/hole/hole_consumer.gd" id="4_baal1"]
+[ext_resource type="Script" uid="uid://bp45g6pqbgldb" path="res://scripts/game/hole/hole_growth.gd" id="5_80gpl"]
+[ext_resource type="Material" uid="uid://bfpfaj0k1yv1p" path="res://assets/materials/hole/progress_ring_background_material.tres" id="6_g75dj"]
+[ext_resource type="Script" uid="uid://c5dsb0aimqcbq" path="res://scripts/game/hole/hole_progress_ring.gd" id="6_ictn2"]
+[ext_resource type="Material" uid="uid://eld5c2at24wp" path="res://assets/materials/hole/progress_ring_fill_material.tres" id="7_1bwuw"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_8cssa"]
 top_radius = 0.9
@@ -48,3 +52,27 @@ script = ExtResource("4_baal1")
 
 [node name="ConsumerCollision" type="CollisionShape3D" parent="HoleConsumer"]
 shape = SubResource("CylinderShape3D_80gpl")
+
+[node name="HoleGrowth" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_80gpl")
+visual_root_path = NodePath("../VisualRoot")
+movement_collision_path = NodePath("../MovementCollision")
+hole_consumer_path = NodePath("../HoleConsumer")
+consumer_collision_path = NodePath("../HoleConsumer/ConsumerCollision")
+progress_ring_fill_path = NodePath("../ProgressRingRoot/ProgressRingFill")
+progress_ring_background_path = NodePath("../ProgressRingRoot/ProgressRingBackground")
+
+[node name="ProgressRingRoot" type="Node3D" parent="."]
+
+[node name="ProgressRingBackground" type="MeshInstance3D" parent="ProgressRingRoot"]
+material_override = ExtResource("6_g75dj")
+script = ExtResource("6_ictn2")
+
+[node name="ProgressRingFill" type="MeshInstance3D" parent="ProgressRingRoot"]
+unique_name_in_owner = true
+material_override = ExtResource("7_1bwuw")
+script = ExtResource("6_ictn2")
+radius = 1.28
+thickness = 0.13
+y_offset = 0.09
