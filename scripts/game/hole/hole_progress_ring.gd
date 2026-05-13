@@ -7,6 +7,7 @@ class_name HoleProgressRing
 @export var segments: int = 96
 @export var y_offset: float = 0.08
 @export var start_angle_degrees: float = -90.0
+@export var ring_material: Material
 
 
 func _ready() -> void:
@@ -28,6 +29,7 @@ func rebuild_mesh() -> void:
 
 	if clamped_progress <= 0.0:
 		mesh = ArrayMesh.new()
+		material_override = ring_material
 		return
 
 	var outer_radius := radius + thickness * 0.5
@@ -44,20 +46,10 @@ func rebuild_mesh() -> void:
 	for index in range(used_segments + 1):
 		var ratio := float(index) / float(used_segments)
 		var angle := start_angle + angle_span * ratio
-
 		var direction := Vector3(cos(angle), 0.0, sin(angle))
 
-		vertices.append(Vector3(
-			direction.x * outer_radius,
-			y_offset,
-			direction.z * outer_radius
-		))
-
-		vertices.append(Vector3(
-			direction.x * inner_radius,
-			y_offset,
-			direction.z * inner_radius
-		))
+		vertices.append(Vector3(direction.x * outer_radius, y_offset, direction.z * outer_radius))
+		vertices.append(Vector3(direction.x * inner_radius, y_offset, direction.z * inner_radius))
 
 		normals.append(Vector3.UP)
 		normals.append(Vector3.UP)
@@ -83,3 +75,4 @@ func rebuild_mesh() -> void:
 	new_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 
 	mesh = new_mesh
+	material_override = ring_material
